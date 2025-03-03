@@ -1,48 +1,45 @@
-import { Wallet } from "@/model";
+import { Asset } from "@/model";
 import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import Image from "next/image";
 
-export async function getWallet(walletId:string): Promise<Wallet> {
-  const response = await fetch(`http://localhost:3000/wallets/${walletId}`);
+export async function getAssets(): Promise<Asset[]> {
+  const response = await fetch(`http://localhost:3000/assets`);
   return response.json();
 }
 
-export default async function WalletListPage({ searchParams }: { searchParams: Promise<{ wallet_id: string }> }) {
-  const { wallet_id }  = await searchParams;
-  const wallet = await getWallet(wallet_id);
+export default async function AssetsListPage() {
+  const assets = await getAssets();
 
   
   return (
     <div className="flex flex-col space-y-5 flex-grow">
       <article className="format">
-        <h1>My wallet</h1>
+        <h1>Assets</h1>
       </article>
       <div className="overflow-x-auto w-full">
         <Table className="w-full max-w-full table-fixed">
           <TableHead>
             <TableHeadCell>Asset</TableHeadCell>
             <TableHeadCell>Price</TableHeadCell>
-            <TableHeadCell>Quantity</TableHeadCell>
             <TableHeadCell>Buy/Sell</TableHeadCell>
           </TableHead>
           <TableBody>
-            { wallet.assets.map((walletAsset, key) => (
+            { assets.map((asset, key) => (
               <TableRow key={key}>
                 <TableCell>
                   <div className="flex space-x-1">
                     <div className="content-center">
-                      <Image src={ walletAsset.asset.image_url } alt={ walletAsset.asset.symbol } width={30} height={30}/>
+                      <Image src={ asset.image_url } alt={ asset.symbol } width={30} height={30}/>
                     </div>
                     <div className="flex flex-col text-sm">
-                      <span>{ walletAsset.asset.name }</span>
-                      <span>{ walletAsset.asset.symbol }</span>
+                      <span>{ asset.name }</span>
+                      <span>{ asset.symbol }</span>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>R$ { walletAsset.asset.price }</TableCell>
-                <TableCell>{ walletAsset.shares }</TableCell>
+                <TableCell>R$ { asset.price }</TableCell>
                 <TableCell>
-                  <Button color="light">Comprar/Vender</Button>
+                  <Button color="light">Buy/Sell</Button>
                 </TableCell>
               </TableRow>
             ))}
