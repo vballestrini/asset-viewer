@@ -1,6 +1,5 @@
 import { Wallet } from "@/model";
 import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
-import Image from "next/image";
 import { AssetRow } from "./components/AssetRow";
 
 export async function getWallet(walletId:string): Promise<Wallet> {
