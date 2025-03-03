@@ -26,7 +26,7 @@ export class WalletsService {
   findOne(id: string) {
     return this.walletSchema.findById(id).populate([
       {
-        path: 'assets', //walletasset
+        path: 'assets',
         populate: ['asset'],
       },
     ]) as Promise<
