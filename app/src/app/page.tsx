@@ -1,6 +1,7 @@
 import { Wallet } from "@/model";
 import { Button, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import Image from "next/image";
+import { AssetRow } from "./components/AssetRow";
 
 export async function getWallet(walletId:string): Promise<Wallet> {
   const response = await fetch(`http://localhost:3000/wallets/${walletId}`);
@@ -29,20 +30,12 @@ export default async function WalletListPage({ searchParams }: { searchParams: P
             { wallet.assets.map((walletAsset, key) => (
               <TableRow key={key}>
                 <TableCell>
-                  <div className="flex space-x-1">
-                    <div className="content-center">
-                      <Image src={ walletAsset.asset.image_url } alt={ walletAsset.asset.symbol } width={30} height={30}/>
-                    </div>
-                    <div className="flex flex-col text-sm">
-                      <span>{ walletAsset.asset.name }</span>
-                      <span>{ walletAsset.asset.symbol }</span>
-                    </div>
-                  </div>
+                  <AssetRow asset={walletAsset.asset} />
                 </TableCell>
                 <TableCell>R$ { walletAsset.asset.price }</TableCell>
                 <TableCell>{ walletAsset.shares }</TableCell>
                 <TableCell>
-                  <Button color="light">Comprar/Vender</Button>
+                  <Button color="light">Buy/Sell</Button>
                 </TableCell>
               </TableRow>
             ))}
