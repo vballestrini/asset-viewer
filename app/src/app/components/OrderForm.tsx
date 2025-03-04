@@ -3,10 +3,8 @@
 import { Asset, Order, OrderType } from "@/model";
 import { Button, Label, TextInput } from "flowbite-react";
 import { FormEvent } from "react";
-// import { socket } from "../socket-io";
-// import { toast } from "react-toastify";
-
-//server component vs client component;
+import { toast } from "react-toastify";
+import { socket } from "./socket";
 
 export function OrderForm(props: {
   asset: Asset;
@@ -14,22 +12,22 @@ export function OrderForm(props: {
   type: OrderType;
 }) {
   const color = props.type == OrderType.BUY ? "text-blue-700" : "text-red-700";
-  const translatedType = props.type == OrderType.BUY ? "buy" : "sell";
+  const translatedType = props.type == OrderType.BUY ? "Buy" : "Sell";
 
-//   async function onSubmit(event: FormEvent<HTMLFormElement>) {
-//     event.preventDefault();
-//     const formData = new FormData(event.currentTarget);
-//     const data = Object.fromEntries(formData.entries());
-//     socket.connect();
-//     const newOrder: Order = await socket.emitWithAck("orders/create", data);
-//     toast(
-//       `${translatedType} ${newOrder.shares} shares of ${props.asset.symbol} order submited with sucess`,
-//       { type: "success", position: "top-right" }
-//     );
-//   }
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    socket.connect();
+    const newOrder: Order = await socket.emitWithAck("orders/create", data);
+    toast(
+      `${translatedType} ${newOrder.shares} shares of ${props.asset.symbol} order submited with success`,
+      { type: "success", position: "top-right" }
+    );
+  }
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <input type="hidden" name="assetId" defaultValue={props.asset._id} />
       <input type="hidden" name="walletId" defaultValue={props.walletId} />
       <input type="hidden" name="type" defaultValue={props.type} />
