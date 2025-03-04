@@ -67,7 +67,6 @@ export class WalletsService {
       await session.commitTransaction();
       return walletAsset;
     } catch (error) {
-      console.log(error);
       await session.abortTransaction();
       throw error;
     } finally {

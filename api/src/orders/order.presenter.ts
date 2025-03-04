@@ -6,7 +6,6 @@ export class OrderPresenter {
   constructor(private order: Order & { asset: Asset }) {}
 
   toJSON() {
-    console.log(this.order.price);
     return {
       _id: this.order._id,
       shares: this.order.shares,
