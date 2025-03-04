@@ -32,7 +32,7 @@ export default async function AssetsListPage({ searchParams }: { searchParams: P
                 </TableCell>
                 <TableCell>R$ { asset.price }</TableCell>
                 <TableCell>
-                  <Button color="light" as={Link} href={`/assets/${asset.symbol}`}>Buy/Sell</Button>
+                <Button color="light" as={Link} href={`/assets/${asset.symbol}?wallet_id=${wallet_id}`}>Buy/Sell</Button>
                 </TableCell>
               </TableRow>
             ))}

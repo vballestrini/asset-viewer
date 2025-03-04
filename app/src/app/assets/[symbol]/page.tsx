@@ -5,7 +5,7 @@ import { OrderType } from "@/model";
 import { Card, Tabs } from "flowbite-react";
 import AssetChart from "./AssetChart";
 import { WalletList } from "@/app/components/WalletList";
-import { getAsset } from "node:sea";
+import { getAsset } from "@/queries/queries";
 
 export default async function AssetView(
     { params,
