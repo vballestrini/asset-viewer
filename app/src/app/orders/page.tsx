@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 
 import { AssetRow } from "../components/AssetRow";
 import { OrderTypeBadge } from "../components/OrderTypeBadge";
 import { OrderStatusBadge } from "../components/OrderStatusBadge";
+import { WalletList } from "../components/WalletList";
 
 export async function getOrders(walletId:string): Promise<Order[]> {
   const response = await fetch(`http://localhost:3000/orders?walletId=${walletId}`);
@@ -13,6 +14,9 @@ export default async function OrdersListPage({ searchParams }: { searchParams: P
   const { wallet_id }  = await searchParams;
   const orders = await getOrders(wallet_id);
 
+  if(!wallet_id) {
+    return <WalletList />;
+  }
   
   return (
     <div className="flex flex-col space-y-5 flex-grow">
