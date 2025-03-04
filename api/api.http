@@ -6,7 +6,7 @@ Content-Type: application/json
     "name": "Amazon",
     "symbol": "AMZN",
     "price": "127.00",
-    "image": "amz.png"
+    "image": "AMZN.png"
 }
 ###
 @assetId = {{createAsset.response.body._id}}
