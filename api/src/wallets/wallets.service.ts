@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
 import mongoose, { Model } from 'mongoose';
@@ -24,7 +24,7 @@ export class WalletsService {
   }
 
   findOne(id: string) {
-    return this.walletSchema.findById(id).populate([
+    const wallet = this.walletSchema.findById(id).populate([
       {
         path: 'assets',
         populate: ['asset'],
@@ -32,6 +32,12 @@ export class WalletsService {
     ]) as Promise<
       (Wallet & { assets: (WalletAsset & { asset: Asset })[] }) | null
     >;
+
+    if (!wallet) {
+      throw new NotFoundException('Wallet not found');
+    }
+
+    return wallet;
   }
 
   async createWalletAsset(data: {
